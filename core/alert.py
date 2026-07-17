@@ -14,6 +14,12 @@ def send_telegram(message: str) -> bool:
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
 
     if not token or not chat_id:
+        if os.environ.get("GITHUB_ACTIONS"):
+            raise RuntimeError(
+                "TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is missing or empty in this "
+                "workflow run, so an alert that was due to fire could not be sent. "
+                "Check the repo's Actions secrets."
+            )
         log.warning("no Telegram credentials set, skipping send: %s", message)
         return False
 
