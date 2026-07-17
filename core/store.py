@@ -8,8 +8,16 @@ _SCHEMA_PATH = Path(__file__).resolve().parent.parent / "db" / "schema.sql"
 
 
 def get_connection():
-    url = os.environ.get("TURSO_DATABASE_URL", "file:local.db")
+    url = os.environ.get("TURSO_DATABASE_URL") or "file:local.db"
     token = os.environ.get("TURSO_AUTH_TOKEN") or None
+
+    if os.environ.get("GITHUB_ACTIONS") and url == "file:local.db":
+        raise RuntimeError(
+            "TURSO_DATABASE_URL is missing or empty in this workflow run. "
+            "Without it, writes silently land in a throwaway local database "
+            "instead of Turso. Check the repo's Actions secrets."
+        )
+
     conn = libsql.connect(database=url, auth_token=token) if token else libsql.connect(database=url)
     conn.executescript(_SCHEMA_PATH.read_text())
     conn.commit()
