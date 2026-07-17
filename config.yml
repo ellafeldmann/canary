@@ -1,0 +1,17 @@
+sources:
+  usgs:
+    feed_url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson"
+    cadence_minutes: 15
+    # USGS already ships a PAGER alert color and a "sig" score, so we map
+    # those onto our 0-5 scale instead of building a baseline for phase 1.
+    alert_color_severity:
+      green: 1
+      yellow: 3
+      orange: 4
+      red: 5
+    sig_severity_floor: 650   # events without an alert color still escalate past this
+
+alerting:
+  send_at_severity: 3
+  repeat_hours_at_severity: 4
+  repeat_min_severity: 4
