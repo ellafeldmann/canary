@@ -1,0 +1,9 @@
+name = "canary-subscriptions"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+# Secrets (not set here) -- add via `wrangler secret put <NAME>`:
+#   TURSO_DATABASE_URL
+#   TURSO_AUTH_TOKEN
+#   TELEGRAM_BOT_TOKEN
+#   TELEGRAM_WEBHOOK_SECRET   (a random string you also pass to Telegram's setWebhook)
