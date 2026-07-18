@@ -9,9 +9,9 @@ log = logging.getLogger(__name__)
 _API = "https://api.telegram.org/bot{token}/sendMessage"
 
 
-def send_telegram(message: str) -> bool:
+def send_telegram(message: str, chat_id=None) -> bool:
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+    chat_id = chat_id or os.environ.get("TELEGRAM_CHAT_ID")
 
     if not token or not chat_id:
         if os.environ.get("GITHUB_ACTIONS"):

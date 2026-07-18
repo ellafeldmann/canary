@@ -10,8 +10,5 @@ sources:
       orange: 4
       red: 5
     sig_severity_floor: 650   # events without an alert color still escalate past this
-
-alerting:
-  send_at_severity: 3
-  repeat_hours_at_severity: 4
-  repeat_min_severity: 4
+    # Phase 1's single global alert threshold is superseded by each
+    # subscriber's own min_severity (subscribers table, default 3).
